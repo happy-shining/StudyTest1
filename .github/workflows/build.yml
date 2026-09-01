@@ -36,10 +36,13 @@ jobs:
     - name: Install NSIS
       run: choco install nsis -y
 
+    - name: Check NSIS path
+      run: dir "C:/Program Files (x86)/NSIS"
+
     # --- NSIS スクリプト実行 ---
     - name: Build installer with NSIS
       working-directory: StudyTest1/Installer
-      run: makensis.exe StudyTest1_SetUp.nsi
+      run: "C:/Program Files (x86)/NSIS/makensis.exe StudyTest1_SetUp.nsi
 
     # --- Release 作成 ---
     - name: Create Release
