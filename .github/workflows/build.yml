@@ -17,11 +17,11 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v7
+      uses: actions/checkout@v4
 
     # .NET Framework のビルドには不要だが、あっても問題なし
     - name: Setup .NET SDK (optional)
-      uses: actions/setup-dotnet@v7
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
 
