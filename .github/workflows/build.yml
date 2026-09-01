@@ -1,4 +1,4 @@
-name: Build .NET Framework 4.7.2 WinForms
+name: Build and Test (.NET Framework 4.7.2)
 
 on:
   push:
@@ -17,16 +17,19 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     # .NET Framework のビルドには不要だが、あっても問題なし
     - name: Setup .NET SDK (optional)
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v7
       with:
         dotnet-version: 8.0.x
 
     - name: Restore NuGet packages
       run: dotnet restore
 
-    - name: Build project
+    - name: Build solution
       run: dotnet build --configuration Release --no-restore
+
+    - name: Run tests
+      run: dotnet test --configuration Release --no-build
