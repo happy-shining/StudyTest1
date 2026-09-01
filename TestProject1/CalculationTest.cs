@@ -16,7 +16,7 @@ namespace TestProject1
             Calculation c = new Calculation();
             int ret = c.Add(3, 4);
 
-            Assert.AreEqual(6, ret);
+            Assert.AreEqual(7, ret);
         }
     }
 }
