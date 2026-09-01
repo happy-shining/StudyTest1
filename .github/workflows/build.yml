@@ -1,37 +1,29 @@
-name: Build and Test (.NET Framework 4.7.2)
+name: Build, Test and Create Installer
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
     branches: [ "master" ]
 
 jobs:
   build:
     runs-on: windows-latest
 
-    env:
-      DOTNET_CLI_TELEMETRY_OPTOUT: 1
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-      DOTNET_NOLOGO: true
-
     steps:
     - name: Checkout
       uses: actions/checkout@v4
 
-    # .NET Framework のビルドには不要だが、あっても問題なし
-    - name: Setup .NET SDK (optional)
+    - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
 
-    - name: Restore NuGet packages
+    - name: Restore
       run: dotnet restore
 
-    - name: Build solution
+    - name: Build
       run: dotnet build --configuration Release --no-restore
 
-    - name: Run tests
+    - name: Test
       run: dotnet test --configuration Release --no-build --logger "trx"
 
     - name: Upload test results
@@ -40,3 +32,21 @@ jobs:
         name: test-results
         path: "**/TestResults/*.trx"
 
+    # --- NSIS インストール ---
+    - name: Install NSIS
+      run: choco install nsis -y
+
+    # --- NSIS スクリプト実行 ---
+    - name: Build installer with NSIS
+      working-directory: StudyTest1/Installer
+      run: makensis.exe StudyTest1_SetUp.nsi
+
+    # --- Release 作成 ---
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ github.run_number }}
+        name: "Build ${{ github.run_number }}"
+        files: "StudyTest1/Installer/StudyTest1_Setup.exe"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
