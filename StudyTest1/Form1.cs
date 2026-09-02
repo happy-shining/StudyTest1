@@ -19,7 +19,7 @@ namespace StudyTest1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("クリックしました6");
+            MessageBox.Show("クリックしました7");
         }
     }
 }
