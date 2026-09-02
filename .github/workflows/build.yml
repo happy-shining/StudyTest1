@@ -50,6 +50,15 @@ jobs:
       with:
         tag_name: v${{ github.run_number }}
         name: "Build ${{ github.run_number }}"
-        files: "StudyTest1/Installer/StudyTest1_Setup.exe"
+        files:
+          - "StudyTest1/Installer/StudyTest1_Setup.exe"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+with:
+  tag_name: v${{ github.run_number }}
+  name: "Build ${{ github.run_number }}"
+  files:
+    - "StudyTest1/Installer/StudyTest1_Setup.exe"
+
