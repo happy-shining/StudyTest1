@@ -77,11 +77,15 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    # --- 最新のRelease版 --- 
     - name: Create Latest Release
       uses: softprops/action-gh-release@v1
       with:
         tag_name: latest
         name: "Latest Build"
+        body: |
+          自動生成されたビルドです。
+          ビルド日時: ${{ github.event.head_commit.timestamp }}
         files: |
           "StudyTest1/Installer/StudyTest1_Setup.exe"
         overwrite_files: true
