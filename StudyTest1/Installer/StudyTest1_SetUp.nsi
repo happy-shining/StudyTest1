@@ -1,5 +1,5 @@
 ﻿; インストーラの基本設定
-OutFile "StudyTest1_Setup.exe"
+OutFile "StudyTest1_SetUp.exe"
 InstallDir "$PROGRAMFILES\StudyTest1"
 RequestExecutionLevel admin
 
