@@ -87,18 +87,18 @@ jobs:
 
     # --- バージョン付きReleaseを作成 ---
     - name: Create Versioned Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ steps.version.outputs.newVersion }}
         name: "Version ${{ steps.version.outputs.newVersion }}"
         files: |
-          "StudyTest1/Installer/StudyTest1_Setup.exe"
+          "StudyTest1/Installer/*.exe"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
     # --- Latest Releaseを上書き(コメントも更新) ---
     - name: Create Latest Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: latest
         name: "Latest Build"
@@ -111,7 +111,7 @@ jobs:
           Date: ${{ github.event.head_commit.timestamp }}
 
         files: |
-          "StudyTest1/Installer/StudyTest1_Setup.exe"
+          "StudyTest1/Installer/*.exe"
         overwrite_files: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
