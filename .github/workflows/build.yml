@@ -84,8 +84,12 @@ jobs:
         tag_name: latest
         name: "Latest Build"
         body: |
-          自動生成されたビルドです。
-          ビルド日時: ${{ github.event.head_commit.timestamp }}
+          最新ビルドが生成されました。
+
+          Version: ${{ steps.version.outputs.newVersion }}
+          Commit: ${{ github.sha }}
+          Message: ${{ github.event.head_commit.message }}
+          Date: ${{ github.event.head_commit.timestamp }}
         files: |
           "StudyTest1/Installer/StudyTest1_Setup.exe"
         overwrite_files: true
