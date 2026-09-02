@@ -44,12 +44,12 @@ jobs:
       working-directory: StudyTest1/Installer
       run: "C:/Program Files (x86)/NSIS/makensis.exe StudyTest1_SetUp.nsi"
 
-    # --- Release 作成 ---
+      # --- Release 作成 ---
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
         tag_name: v${{ github.run_number }}
         name: "Build ${{ github.run_number }}"
-        files: "StudyTest1/Installer/StudyTest1_Setup.exe"
+        file: "StudyTest1/Installer/StudyTest1_Setup.exe"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
