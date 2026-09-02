@@ -54,6 +54,10 @@ jobs:
       run: |
         & "C:/Program Files (x86)/NSIS/makensis.exe" "StudyTest1_SetUp.nsi"
     
+    # --- Fetchでリモートタグを取得する ---
+    - name: Fetch tags
+      run: git fetch --tags
+
     # --- 最新タグを取得 ---
     - name: Get latest tag
       id: get_tag
@@ -115,5 +119,3 @@ jobs:
         overwrite_files: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
