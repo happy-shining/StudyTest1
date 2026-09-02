@@ -47,13 +47,43 @@ jobs:
         & "C:/Program Files (x86)/NSIS/makensis.exe" "StudyTest1_SetUp.nsi"
         
     # --- Release 作成 ---
-    - name: Create Release
-      uses: softprops/action-gh-release@v2
+    - name: Read current version
+      id: version
+      run: |
+        $version = Get-Content version.txt
+        $parts = $version.Split('.')
+        $major = [int]$parts[0]
+        $minor = [int]$parts[1]
+        $patch = [int]$parts[2] + 1
+        $newVersion = "$major.$minor.$patch"
+        echo "newVersion=$newVersion" >> $env:GITHUB_OUTPUT
+
+    - name: Update version.txt
+      run: |
+        Set-Content version.txt ${{ steps.version.outputs.newVersion }}
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git add version.txt
+        git commit -m "Update version to ${{ steps.version.outputs.newVersion }}"
+        git push
+
+    - name: Create Versioned Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ steps.version.outputs.newVersion }}
+        name: "Version ${{ steps.version.outputs.newVersion }}"
+        files: |
+          "StudyTest1/Installer/StudyTest1_Setup.exe"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create Latest Release
+      uses: softprops/action-gh-release@v1
       with:
         tag_name: latest
         name: "Latest Build"
         files: |
-          StudyTest1/Installer/*.exe
+          "StudyTest1/Installer/StudyTest1_Setup.exe"
         overwrite_files: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
