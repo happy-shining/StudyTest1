@@ -42,7 +42,7 @@ jobs:
     # --- NSIS スクリプト実行 ---
     - name: Build installer with NSIS
       working-directory: StudyTest1/Installer
-      run: "C:/Program Files (x86)/NSIS/makensis.exe StudyTest1_SetUp.nsi
+      run: "C:/Program Files (x86)/NSIS/makensis.exe StudyTest1_SetUp.nsi"
 
     # --- Release 作成 ---
     - name: Create Release
@@ -50,15 +50,6 @@ jobs:
       with:
         tag_name: v${{ github.run_number }}
         name: "Build ${{ github.run_number }}"
-        files:
-          - "StudyTest1/Installer/StudyTest1_Setup.exe"
+        files: "StudyTest1/Installer/StudyTest1_Setup.exe"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-with:
-  tag_name: v${{ github.run_number }}
-  name: "Build ${{ github.run_number }}"
-  files:
-    - "StudyTest1/Installer/StudyTest1_Setup.exe"
-
