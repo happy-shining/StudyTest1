@@ -87,7 +87,7 @@ jobs:
 
     # --- バージョン付きReleaseを作成 ---
     - name: Create Versioned Release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ steps.version.outputs.newVersion }}
         name: "Version ${{ steps.version.outputs.newVersion }}"
@@ -98,7 +98,7 @@ jobs:
     
     # --- Latest Releaseを上書き(コメントも更新) ---
     - name: Create Latest Release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v1
       with:
         tag_name: latest
         name: "Latest Build"
