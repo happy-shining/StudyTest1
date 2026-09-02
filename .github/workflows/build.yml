@@ -43,8 +43,9 @@ jobs:
     # --- NSIS スクリプト実行 ---
     - name: Build installer with NSIS
       working-directory: StudyTest1/Installer
-      run: "C:/Program Files (x86)/NSIS/makensis.exe StudyTest1_SetUp.nsi"
-
+      run: |
+        & "C:/Program Files (x86)/NSIS/makensis.exe" "StudyTest1_SetUp.nsi"
+        
     # --- Release 作成 ---
     - name: Create Release
       uses: softprops/action-gh-release@v2
