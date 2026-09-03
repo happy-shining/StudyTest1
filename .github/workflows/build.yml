@@ -77,7 +77,10 @@ jobs:
       working-directory: StudyTest1/Installer
       run: |
         & "${{ steps.find_nsis.outputs.path }}" "StudyTest1_SetUp.nsi"
-        
+    
+    - name: CheckDir
+      run: dir StudyTest1/Installer 
+
     # --- Fetchでリモートタグを取得する ---
     - name: Fetch tags
       run: git fetch --tags
