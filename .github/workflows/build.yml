@@ -135,7 +135,7 @@ jobs:
           Date: ${{ github.event.head_commit.timestamp }}
 
         files: |
-          "StudyTest1/Installer/*.exe"
+          "StudyTest1/Installer/StudyTest1_SetUp.exe"
         overwrite_files: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
