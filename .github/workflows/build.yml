@@ -137,7 +137,6 @@ jobs:
           Commit: ${{ github.sha }}
           Message: ${{ github.event.head_commit.message }}
           Date: ${{ github.event.head_commit.timestamp }}
-
         files: |
           "StudyTest1/Installer/StudyTest1_SetUp.exe"
         overwrite_files: true
