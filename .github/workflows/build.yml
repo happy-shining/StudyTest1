@@ -44,19 +44,39 @@ jobs:
     - name: Install NSIS
       run: choco install nsis -y
     
-    # --- NSISのパスが存在するか ---
-    - name: Check NSIS path
-      run: dir "C:/Program Files (x86)/NSIS"
+    # -- NSISのパスを取得 ---
+    - name: Find NSIS
+      id: find_nsis
+      run: |
+        $paths = @(
+          "C:/Program Files (x86)/NSIS",
+          "C:/ProgramData/chocolatey/lib/nsis/tools"
+        )
 
-    # --- NSIS スクリプト実行 ---
+        $nsis = $null
+        foreach ($p in $paths) {
+          $exe = Join-Path $p "makensis.exe"
+          if (Test-Path $exe) {
+            $nsis = $exe
+            break
+          }
+        }
+
+        if (-not $nsis) {
+          Write-Error "makensis.exe が見つかりませんでした"
+        }
+
+        echo "path=$nsis" >> $env:GITHUB_OUTPUT
+
+    # --- NSISスクリプト実行 ---
     - name: Build installer with NSIS
       working-directory: StudyTest1/Installer
       run: |
-        & "C:/Program Files (x86)/NSIS/makensis.exe" "StudyTest1_SetUp.nsi"
-    
-    # --- Fetchでリモートタグを取得する ---
-    - name: Fetch tags
-      run: git fetch --tags
+        & "${{ steps.find_nsis.outputs.path }}" "StudyTest1_SetUp.nsi"
+        
+        # --- Fetchでリモートタグを取得する ---
+        - name: Fetch tags
+          run: git fetch --tags
 
     # --- 最新タグを取得 ---
     - name: Get latest tag
