@@ -74,9 +74,9 @@ jobs:
       run: |
         & "${{ steps.find_nsis.outputs.path }}" "StudyTest1_SetUp.nsi"
         
-        # --- Fetchでリモートタグを取得する ---
-        - name: Fetch tags
-          run: git fetch --tags
+    # --- Fetchでリモートタグを取得する ---
+    - name: Fetch tags
+      run: git fetch --tags
 
     # --- 最新タグを取得 ---
     - name: Get latest tag
